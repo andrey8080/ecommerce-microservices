@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: product-catalog-service
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5434/product_service}
+    username: ${SPRING_DATASOURCE_USERNAME:product_service}
+    password: ${SPRING_DATASOURCE_PASSWORD:product_pass}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  rabbitmq:
+    host: ${SPRING_RABBITMQ_HOST:localhost}
+    port: 5672
+    username: ${SPRING_RABBITMQ_USERNAME:admin}
+    password: ${SPRING_RABBITMQ_PASSWORD:password}
+
+server:
+  port: 8080

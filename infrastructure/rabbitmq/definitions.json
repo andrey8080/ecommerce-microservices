@@ -1,0 +1,378 @@
+{
+    "rabbit_version": "3.12.0",
+    "users": [
+        {
+            "name": "admin",
+            "password": "admin123",
+            "tags": "administrator"
+        }
+    ],
+    "vhosts": [
+        {
+            "name": "/"
+        }
+    ],
+    "permissions": [
+        {
+            "user": "admin",
+            "vhost": "/",
+            "configure": ".*",
+            "write": ".*",
+            "read": ".*"
+        }
+    ],
+    "exchanges": [
+        {
+            "name": "user.events",
+            "vhost": "/",
+            "type": "topic",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "product.events",
+            "vhost": "/",
+            "type": "topic",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "cart.events",
+            "vhost": "/",
+            "type": "topic",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "order.events",
+            "vhost": "/",
+            "type": "topic",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "payment.events",
+            "vhost": "/",
+            "type": "topic",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "notification.events",
+            "vhost": "/",
+            "type": "topic",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        },
+        {
+            "name": "stock.events",
+            "vhost": "/",
+            "type": "topic",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        }
+    ],
+    "queues": [
+        {
+            "name": "user.registration",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "order.created",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "payment.processed",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "notification.email",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "notification.sms",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "cart.item.added",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "cart.abandoned",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "order.stock.reserve",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "order.stock.response",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "order.payment.process",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "payment.failed",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "notification.order.created",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "notification.payment.processed",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "notification.payment.failed",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "notification.cart.abandoned",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "notification.user.registered",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "notification.email.send",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "notification.sms.send",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "notification.status.update",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        }
+    ],
+    "bindings": [
+        {
+            "source": "user.events",
+            "vhost": "/",
+            "destination": "user.registration",
+            "destination_type": "queue",
+            "routing_key": "user.registered",
+            "arguments": {}
+        },
+        {
+            "source": "order.events",
+            "vhost": "/",
+            "destination": "order.created",
+            "destination_type": "queue",
+            "routing_key": "order.created",
+            "arguments": {}
+        },
+        {
+            "source": "payment.events",
+            "vhost": "/",
+            "destination": "payment.processed",
+            "destination_type": "queue",
+            "routing_key": "payment.processed",
+            "arguments": {}
+        },
+        {
+            "source": "notification.events",
+            "vhost": "/",
+            "destination": "notification.email",
+            "destination_type": "queue",
+            "routing_key": "notification.email",
+            "arguments": {}
+        },
+        {
+            "source": "notification.events",
+            "vhost": "/",
+            "destination": "notification.sms",
+            "destination_type": "queue",
+            "routing_key": "notification.sms",
+            "arguments": {}
+        },
+        {
+            "source": "cart.events",
+            "vhost": "/",
+            "destination": "cart.item.added",
+            "destination_type": "queue",
+            "routing_key": "cart.item.added",
+            "arguments": {}
+        },
+        {
+            "source": "cart.events",
+            "vhost": "/",
+            "destination": "cart.abandoned",
+            "destination_type": "queue",
+            "routing_key": "cart.abandoned",
+            "arguments": {}
+        },
+        {
+            "source": "stock.events",
+            "vhost": "/",
+            "destination": "order.stock.reserve",
+            "destination_type": "queue",
+            "routing_key": "stock.reserve",
+            "arguments": {}
+        },
+        {
+            "source": "stock.events",
+            "vhost": "/",
+            "destination": "order.stock.response",
+            "destination_type": "queue",
+            "routing_key": "stock.response",
+            "arguments": {}
+        },
+        {
+            "source": "payment.events",
+            "vhost": "/",
+            "destination": "order.payment.process",
+            "destination_type": "queue",
+            "routing_key": "payment.process",
+            "arguments": {}
+        },
+        {
+            "source": "payment.events",
+            "vhost": "/",
+            "destination": "payment.failed",
+            "destination_type": "queue",
+            "routing_key": "payment.failed",
+            "arguments": {}
+        },
+        {
+            "source": "order.events",
+            "vhost": "/",
+            "destination": "notification.order.created",
+            "destination_type": "queue",
+            "routing_key": "order.created",
+            "arguments": {}
+        },
+        {
+            "source": "payment.events",
+            "vhost": "/",
+            "destination": "notification.payment.processed",
+            "destination_type": "queue",
+            "routing_key": "payment.processed",
+            "arguments": {}
+        },
+        {
+            "source": "payment.events",
+            "vhost": "/",
+            "destination": "notification.payment.failed",
+            "destination_type": "queue",
+            "routing_key": "payment.failed",
+            "arguments": {}
+        },
+        {
+            "source": "cart.events",
+            "vhost": "/",
+            "destination": "notification.cart.abandoned",
+            "destination_type": "queue",
+            "routing_key": "cart.abandoned",
+            "arguments": {}
+        },
+        {
+            "source": "user.events",
+            "vhost": "/",
+            "destination": "notification.user.registered",
+            "destination_type": "queue",
+            "routing_key": "user.registered",
+            "arguments": {}
+        },
+        {
+            "source": "notification.events",
+            "vhost": "/",
+            "destination": "notification.email.send",
+            "destination_type": "queue",
+            "routing_key": "notification.email.send",
+            "arguments": {}
+        },
+        {
+            "source": "notification.events",
+            "vhost": "/",
+            "destination": "notification.sms.send",
+            "destination_type": "queue",
+            "routing_key": "notification.sms.send",
+            "arguments": {}
+        },
+        {
+            "source": "notification.events",
+            "vhost": "/",
+            "destination": "notification.status.update",
+            "destination_type": "queue",
+            "routing_key": "notification.status.*",
+            "arguments": {}
+        }
+    ]
+}

@@ -1,0 +1,22 @@
+spring:
+    application:
+        name: cart-service
+    cassandra:
+        contact-points: ${SPRING_CASSANDRA_CONTACT_POINTS:cassandra}
+        port: ${SPRING_CASSANDRA_PORT:9042}
+        keyspace-name: ${SPRING_CASSANDRA_KEYSPACE_NAME:cart_service}
+        schema-action: create_if_not_exists
+        local-datacenter: ${SPRING_CASSANDRA_LOCAL_DATACENTER:datacenter1}
+    rabbitmq:
+        host: ${SPRING_RABBITMQ_HOST:localhost}
+        port: 5672
+        username: ${SPRING_RABBITMQ_USERNAME:admin}
+        password: ${SPRING_RABBITMQ_PASSWORD:password}
+    autoconfigure:
+        exclude:
+            - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+            - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+
+
+server:
+    port: 8080
