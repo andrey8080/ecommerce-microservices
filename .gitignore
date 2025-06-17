@@ -28,7 +28,6 @@ spring.log
 **/build/
 **/libs/
 **/classes/
-**/kotlin/
 **/tmp/
 **/resources/main/
 **/resources/test/
