@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  id="Definition"
+                  targetNamespace="http://example.com/order-process">
+  <bpmn:process id="orderProcess" name="Order Process" isExecutable="true">
+    <bpmn:startEvent id="start" name="Start"/>
+    <bpmn:sequenceFlow id="flow1" sourceRef="start" targetRef="createOrder" />
+    <bpmn:serviceTask id="createOrder" name="Create Order" camunda:class="com.example.orderservice.workflow.CreateOrderDelegate" />
+    <bpmn:sequenceFlow id="flow2" sourceRef="createOrder" targetRef="end" />
+    <bpmn:endEvent id="end" name="End" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_order">
+    <bpmndi:BPMNPlane id="BPMNPlane_order" bpmnElement="orderProcess" />
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

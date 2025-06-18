@@ -88,3 +88,7 @@ data class StockReservationResponse(
     val message: String,
     val failedItems: List<StockReservationItem> = emptyList()
 )
+
+data class StartOrderProcessRequest(
+    val userId: UUID
+)

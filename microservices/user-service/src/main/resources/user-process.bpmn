@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:camunda="http://camunda.org/schema/1.0/bpmn"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  id="Definition"
+                  targetNamespace="http://example.com/user-process">
+  <bpmn:process id="userRegistrationProcess" name="User Registration" isExecutable="true">
+    <bpmn:startEvent id="start" name="Start" />
+    <bpmn:sequenceFlow id="flow1" sourceRef="start" targetRef="fillForm" />
+    <bpmn:userTask id="fillForm" name="Enter Details" camunda:formKey="embedded:app:forms/user-registration.html" camunda:candidateGroups="admin" />
+    <bpmn:sequenceFlow id="flow2" sourceRef="fillForm" targetRef="createUser" />
+    <bpmn:serviceTask id="createUser" name="Create User" camunda:class="com.example.userservice.workflow.CreateUserDelegate" />
+    <bpmn:sequenceFlow id="flow3" sourceRef="createUser" targetRef="end" />
+    <bpmn:endEvent id="end" name="End" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_user">
+    <bpmndi:BPMNPlane id="BPMNPlane_user" bpmnElement="userRegistrationProcess" />
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

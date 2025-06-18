@@ -8,7 +8,7 @@ import com.example.cartservice.repository.CartRepository
 import org.slf4j.LoggerFactory
 import org.springframework.amqp.rabbit.annotation.RabbitListener
 import org.springframework.amqp.rabbit.core.RabbitTemplate
-import org.springframework.scheduling.annotation.Scheduled
+import org.camunda.bpm.engine.RuntimeService
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
@@ -18,7 +18,8 @@ import java.util.*
 @Transactional
 class CartService(
     private val cartRepository: CartRepository,
-    private val rabbitTemplate: RabbitTemplate
+    private val rabbitTemplate: RabbitTemplate,
+    private val runtimeService: RuntimeService
 ) {
     private val logger = LoggerFactory.getLogger(CartService::class.java)
 
@@ -134,14 +135,13 @@ class CartService(
     fun handleOrderCreated(orderEvent: Map<String, Any>) {
         try {
             val userId = orderEvent["userId"] as String
-            clearCart(userId)
-            logger.info("Cleared cart for user {} after order creation", userId)
+            val variables = mapOf("userId" to userId)
+            runtimeService.startProcessInstanceByKey("cartProcess", variables)
         } catch (e: Exception) {
             logger.error("Error processing order created event", e)
         }
     }
 
-    @Scheduled(cron = "0 */30 * * * *")
     fun generateCartStatistics() {
         logger.info("Generating cart statistics")
         

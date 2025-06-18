@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:camunda="http://camunda.org/schema/1.0/bpmn"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  id="Definition"
+                  targetNamespace="http://example.com/cart-maintenance">
+  <bpmn:process id="cartMaintenance" name="Cart Maintenance" isExecutable="true">
+    <bpmn:startEvent id="statsStart" name="Generate Cart Stats">
+      <bpmn:timerEventDefinition>
+        <bpmn:timeCycle>PT30M</bpmn:timeCycle>
+      </bpmn:timerEventDefinition>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="flow1" sourceRef="statsStart" targetRef="statsTask" />
+    <bpmn:serviceTask id="statsTask" name="Generate Stats" camunda:class="com.example.cartservice.workflow.GenerateCartStatsDelegate" />
+    <bpmn:sequenceFlow id="flow2" sourceRef="statsTask" targetRef="statsEnd" />
+    <bpmn:endEvent id="statsEnd" name="End" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_cart_maintenance">
+    <bpmndi:BPMNPlane id="BPMNPlane_cart_maintenance" bpmnElement="cartMaintenance" />
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
