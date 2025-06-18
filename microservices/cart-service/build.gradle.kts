@@ -34,6 +34,9 @@ dependencies {
 
     implementation("org.springframework.cloud:spring-cloud-starter-loadbalancer")
 
+    // Camunda BPM engine for embedded workflow execution
+    implementation("org.camunda.bpm.springboot:camunda-bpm-spring-boot-starter:7.21.0")
+
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")
@@ -53,4 +56,8 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.withType<org.springframework.boot.gradle.tasks.bundling.BootJar> {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }

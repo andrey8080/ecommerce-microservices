@@ -49,3 +49,10 @@ payment:
     timeout-seconds: 30
     retry-attempts: 3
     async-processing: true
+
+camunda:
+  bpm:
+    admin-user:
+      id: demo
+      password: demo
+    generate-unique-process-engine-name: true

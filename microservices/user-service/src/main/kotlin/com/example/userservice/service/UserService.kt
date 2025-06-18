@@ -8,7 +8,6 @@ import com.example.userservice.model.User
 import com.example.userservice.model.UserRole
 import com.example.userservice.repository.UserRepository
 import org.springframework.amqp.rabbit.core.RabbitTemplate
-import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -122,8 +121,7 @@ class UserService(
         )
     }
 
-    // Планировщик задач - очистка неактивных пользователей
-    @Scheduled(cron = "0 0 2 * * ?") // Каждый день в 2:00
+    // Очистка неактивных пользователей
     fun cleanupInactiveUsers() {
         // Логика очистки неактивных пользователей
         // Например, удаление пользователей, которые не логинились больше года
@@ -133,8 +131,7 @@ class UserService(
         // и отправку уведомлений через RabbitMQ
     }
 
-    // Планировщик задач - отправка статистики пользователей
-    @Scheduled(fixedRate = 3600000) // Каждый час
+    // Отправка статистики пользователей
     fun sendUserStatistics() {
         val totalUsers = userRepository.count()
         println("Sending user statistics: Total users = $totalUsers")

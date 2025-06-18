@@ -11,10 +11,10 @@ import com.example.paymentservice.service.gateway.PaymentGatewayService
 import org.slf4j.LoggerFactory
 import org.springframework.amqp.rabbit.annotation.RabbitListener
 import org.springframework.amqp.rabbit.core.RabbitTemplate
+import org.camunda.bpm.engine.RuntimeService
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.scheduling.annotation.Async
-import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.math.BigDecimal
@@ -27,39 +27,23 @@ import java.util.concurrent.CompletableFuture
 class PaymentService(
     private val paymentRepository: PaymentRepository,
     private val rabbitTemplate: RabbitTemplate,
-    private val paymentGateways: List<PaymentGatewayService>
+    private val paymentGateways: List<PaymentGatewayService>,
+    private val runtimeService: RuntimeService
 ) {
     private val logger = LoggerFactory.getLogger(PaymentService::class.java)
 
     @RabbitListener(queues = [RabbitConfig.PAYMENT_PROCESSING_QUEUE])
     fun handlePaymentProcessing(paymentRequest: Map<String, Any>) {
         logger.info("Received payment processing request")
-        
-        try {
-            val orderId = UUID.fromString(paymentRequest["orderId"] as String)
-            val userId = UUID.fromString(paymentRequest["userId"] as String)
-            val amount = BigDecimal(paymentRequest["amount"].toString())
-            val paymentMethod = paymentRequest["paymentMethod"] as String
-            
-            // Create payment record
-            val payment = Payment(
-                orderId = orderId,
-                userId = userId,
-                paymentReference = generatePaymentReference(),
-                amount = amount,
-                method = PaymentMethod.valueOf(paymentMethod),
-                gateway = selectPaymentGateway(PaymentMethod.valueOf(paymentMethod)),
-                status = PaymentStatus.PENDING
-            )
-            
-            val savedPayment = paymentRepository.save(payment)
-            
-            // Process payment asynchronously
-            processPaymentAsync(savedPayment.id, createMockPaymentDetails())
-            
-        } catch (e: Exception) {
-            logger.error("Error processing payment request", e)
-        }
+
+        val variables = mapOf(
+            "orderId" to paymentRequest["orderId"] as String,
+            "userId" to paymentRequest["userId"] as String,
+            "amount" to paymentRequest["amount"].toString(),
+            "paymentMethod" to paymentRequest["paymentMethod"] as String
+        )
+
+        runtimeService.startProcessInstanceByKey("paymentProcess", variables)
     }
 
     @Async
@@ -246,7 +230,6 @@ class PaymentService(
             .map { convertToDto(it) }
     }
 
-    @Scheduled(fixedRate = 300000) // Every 5 minutes
     fun processStuckPayments() {
         logger.info("Processing stuck payments")
         
@@ -302,7 +285,6 @@ class PaymentService(
         }
     }
 
-    @Scheduled(fixedRate = 3600000) // Every hour
     fun generatePaymentStatistics() {
         logger.info("Generating payment statistics")
         

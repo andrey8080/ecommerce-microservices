@@ -30,3 +30,10 @@ management:
 logging:
   level:
     com.example.orderservice: DEBUG
+
+camunda:
+  bpm:
+    admin-user:
+      id: demo
+      password: demo
+    generate-unique-process-engine-name: true

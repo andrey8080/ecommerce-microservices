@@ -8,7 +8,6 @@ import com.example.productservice.repository.CategoryRepository
 import com.example.productservice.repository.ProductRepository
 import org.springframework.amqp.rabbit.annotation.RabbitListener
 import org.springframework.amqp.rabbit.core.RabbitTemplate
-import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
@@ -248,7 +247,6 @@ class ProductService(
     }
 
     // Планировщик задач - проверка низкого уровня запасов
-    @Scheduled(cron = "0 0 9 * * ?") // Каждый день в 9:00
     fun checkLowStockProducts() {
         val lowStockProducts = productRepository.findLowStockProducts(10)
         
@@ -267,7 +265,6 @@ class ProductService(
     }
 
     // Планировщик задач - обновление цен (интеграция с внешней системой)
-    @Scheduled(fixedRate = 21600000) // Каждые 6 часов
     fun updatePricesFromExternalSystem() {
         println("Running scheduled price update from external system")
         

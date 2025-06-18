@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8" />
+  <title>User Registration</title>
+</head>
+<body>
+  <form class="form-horizontal">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input id="username" cam-variable-name="username" cam-variable-type="String" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input id="email" cam-variable-name="email" cam-variable-type="String" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input id="password" type="password" cam-variable-name="password" cam-variable-type="String" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label for="phoneNumber">Phone</label>
+      <input id="phoneNumber" cam-variable-name="phoneNumber" cam-variable-type="String" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label for="role">Role</label>
+      <select id="role" cam-variable-name="role" cam-variable-type="String" class="form-control">
+        <option value="CUSTOMER">Customer</option>
+        <option value="ADMIN">Admin</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+  <script cam-script type="text/form-script">
+    var form = this;
+    form.on('submit', function(evt) {
+      evt.preventDefault();
+      form.submit();
+    });
+  </script>
+</body>
+</html>
