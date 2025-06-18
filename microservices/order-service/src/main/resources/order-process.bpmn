@@ -5,7 +5,7 @@
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   id="Definition"
                   targetNamespace="http://example.com/order-process">
-  <bpmn:process id="orderProcess" name="Order Process" isExecutable="true">
+  <bpmn:process id="orderProcess" name="Order Process" isExecutable="true" camunda:historyTimeToLive="P30D">
     <bpmn:startEvent id="start" name="Start"/>
     <bpmn:sequenceFlow id="flow1" sourceRef="start" targetRef="createOrder" />
     <bpmn:serviceTask id="createOrder" name="Create Order" camunda:class="com.example.orderservice.workflow.CreateOrderDelegate" />

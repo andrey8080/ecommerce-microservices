@@ -33,6 +33,7 @@ dependencies {
 
     // Camunda BPM engine for embedded workflow execution
     implementation("org.camunda.bpm.springboot:camunda-bpm-spring-boot-starter:7.21.0")
+    implementation("org.camunda.bpm.springboot:camunda-bpm-spring-boot-starter-webapp:7.21.0")
 
     // implementation("org.springframework.cloud:spring-cloud-starter-gateway")
     implementation("org.springframework.cloud:spring-cloud-starter-loadbalancer")

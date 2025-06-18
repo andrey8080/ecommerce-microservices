@@ -15,7 +15,7 @@ CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
 # Конфигурация
-PROJECT_ROOT="/home/andrey/Загрузки/Telegram Desktop/software_systems_business_logic_lab3"
+PROJECT_ROOT="/home/andrey/Документы/andrey8080_git/software_systems_business_logic_lab4"
 COMPOSE_FILE="$PROJECT_ROOT/docker-compose.yml"
 
 # Сервисы по порядку запуска
@@ -256,6 +256,73 @@ cleanup() {
     log "INFO" "Очистка завершена"
 }
 
+# Функция для проверки здоровья системы
+check_system_health() {
+    echo -e "${YELLOW}Проверка здоровья сервисов:${NC}"
+    
+    # Проверка API Gateway
+    if curl -s http://localhost:8090/actuator/health > /dev/null 2>&1; then
+        echo -e "  ${GREEN}✓${NC} API Gateway (port 8090)"
+    else
+        echo -e "  ${RED}✗${NC} API Gateway (port 8090)"
+    fi
+    
+    # Проверка User Service
+    if curl -s http://localhost:8081/actuator/health > /dev/null 2>&1; then
+        echo -e "  ${GREEN}✓${NC} User Service (port 8081)"
+    else
+        echo -e "  ${RED}✗${NC} User Service (port 8081)"
+    fi
+    
+    # Проверка Product Catalog Service
+    if curl -s http://localhost:8082/actuator/health > /dev/null 2>&1; then
+        echo -e "  ${GREEN}✓${NC} Product Catalog Service (port 8082)"
+    else
+        echo -e "  ${RED}✗${NC} Product Catalog Service (port 8082)"
+    fi
+    
+    # Проверка Order Service
+    if curl -s http://localhost:8084/actuator/health > /dev/null 2>&1; then
+        echo -e "  ${GREEN}✓${NC} Order Service (port 8084)"
+    else
+        echo -e "  ${RED}✗${NC} Order Service (port 8084)"
+    fi
+    
+    # Проверка Payment Service
+    if curl -s http://localhost:8085/actuator/health > /dev/null 2>&1; then
+        echo -e "  ${GREEN}✓${NC} Payment Service (port 8085)"
+    else
+        echo -e "  ${RED}✗${NC} Payment Service (port 8085)"
+    fi
+    
+    echo -e "${YELLOW}Camunda Web UI:${NC}"
+    
+    # Проверка Camunda UI на каждом сервисе
+    if curl -s http://localhost:8081/camunda/ > /dev/null 2>&1; then
+        echo -e "  ${GREEN}✓${NC} User Service Camunda UI: http://localhost:8081/camunda/"
+    else
+        echo -e "  ${RED}✗${NC} User Service Camunda UI недоступен"
+    fi
+    
+    if curl -s http://localhost:8082/camunda/ > /dev/null 2>&1; then
+        echo -e "  ${GREEN}✓${NC} Product Catalog Camunda UI: http://localhost:8082/camunda/"
+    else
+        echo -e "  ${RED}✗${NC} Product Catalog Camunda UI недоступен"
+    fi
+    
+    if curl -s http://localhost:8084/camunda/ > /dev/null 2>&1; then
+        echo -e "  ${GREEN}✓${NC} Order Service Camunda UI: http://localhost:8084/camunda/"
+    else
+        echo -e "  ${RED}✗${NC} Order Service Camunda UI недоступен"
+    fi
+    
+    if curl -s http://localhost:8085/camunda/ > /dev/null 2>&1; then
+        echo -e "  ${GREEN}✓${NC} Payment Service Camunda UI: http://localhost:8085/camunda/"
+    else
+        echo -e "  ${RED}✗${NC} Payment Service Camunda UI недоступен"
+    fi
+}
+
 # Функция для отображения статуса
 show_status() {
     print_header "СТАТУС СИСТЕМЫ"
@@ -278,13 +345,19 @@ print_urls() {
     print_header "ПОЛЕЗНЫЕ URL"
     
     echo -e "${GREEN}Микросервисы:${NC}"
-    echo "  API Gateway:         http://localhost:8080"
+    echo "  API Gateway:         http://localhost:8090"
     echo "  User Service:        http://localhost:8081"
     echo "  Product Service:     http://localhost:8082"
-    echo "  Cart Service:        http://localhost:8083"
     echo "  Order Service:       http://localhost:8084"
     echo "  Payment Service:     http://localhost:8085"
-    echo "  Notification Service: http://localhost:8086"
+    
+    echo
+    echo -e "${GREEN}Camunda BPM UI:${NC}"
+    echo "  User Service:        http://localhost:8081/camunda/"
+    echo "  Product Service:     http://localhost:8082/camunda/"
+    echo "  Order Service:       http://localhost:8084/camunda/"
+    echo "  Payment Service:     http://localhost:8085/camunda/"
+    echo "  (Логин: demo, Пароль: demo)"
     
     echo
     echo -e "${GREEN}Инфраструктура:${NC}"
@@ -296,17 +369,14 @@ print_urls() {
     echo "  PostgreSQL Product:   localhost:5434"
     echo "  PostgreSQL Order:     localhost:5435"
     echo "  PostgreSQL Payment:   localhost:5436"
-    echo "  MongoDB:             localhost:27017"
     echo "  Cassandra:           localhost:9042"
     
     echo
     echo -e "${GREEN}API Documentation:${NC}"
-    for service in user product cart order payment notification; do
-        port=$((8081 + $(echo "user product cart order payment notification" | tr ' ' '\n' | grep -n "$service" | cut -d: -f1) - 1))
-        if [ "$service" = "payment" ]; then port=8085; fi
-        if [ "$service" = "notification" ]; then port=8086; fi
-        echo "  ${service^} Service Swagger: http://localhost:$port/swagger-ui.html"
-    done
+    echo "  User Service Swagger:     http://localhost:8081/swagger-ui.html"
+    echo "  Product Service Swagger:  http://localhost:8082/swagger-ui.html"
+    echo "  Order Service Swagger:    http://localhost:8084/swagger-ui.html"
+    echo "  Payment Service Swagger:  http://localhost:8085/swagger-ui.html"
 }
 
 # Функция для выполнения миграций

@@ -43,6 +43,7 @@ dependencies {
 
     // Camunda BPM engine for embedded workflow execution
     implementation("org.camunda.bpm.springboot:camunda-bpm-spring-boot-starter:7.21.0")
+    implementation("org.camunda.bpm.springboot:camunda-bpm-spring-boot-starter-webapp:7.21.0")
 
     runtimeOnly("org.postgresql:postgresql")
     testImplementation("org.springframework.boot:spring-boot-starter-test")

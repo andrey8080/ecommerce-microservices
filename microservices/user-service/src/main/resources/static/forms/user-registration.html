@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>User Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .form-container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+
+        .button-group {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 0 10px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .cancel-btn {
+            background-color: #f44336;
+        }
+
+        .cancel-btn:hover {
+            background-color: #da190b;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form-container">
+        <h1>Регистрация пользователя</h1>
+        <form role="form">
+            <div class="form-group">
+                <label for="firstName">Имя:</label>
+                <input type="text" class="form-control" id="firstName" name="firstName" required
+                    placeholder="Введите ваше имя">
+            </div>
+
+            <div class="form-group">
+                <label for="lastName">Фамилия:</label>
+                <input type="text" class="form-control" id="lastName" name="lastName" required
+                    placeholder="Введите вашу фамилию">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" required
+                    placeholder="Введите ваш email">
+            </div>
+
+            <div class="form-group">
+                <label for="username">Имя пользователя:</label>
+                <input type="text" class="form-control" id="username" name="username" required
+                    placeholder="Введите имя пользователя">
+            </div>
+
+            <div class="button-group">
+                <button type="submit" class="btn btn-primary">
+                    Зарегистрировать
+                </button>
+                <button type="button" class="btn btn-default cancel-btn" onclick="window.history.back();">
+                    Отмена
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Простая валидация формы
+        document.querySelector('form').addEventListener('submit', function (e) {
+            const inputs = this.querySelectorAll('input[required]');
+            let isValid = true;
+
+            inputs.forEach(input => {
+                if (!input.value.trim()) {
+                    input.style.borderColor = '#f44336';
+                    isValid = false;
+                } else {
+                    input.style.borderColor = '#ddd';
+                }
+            });
+
+            if (!isValid) {
+                e.preventDefault();
+                alert('Пожалуйста, заполните все обязательные поля');
+            }
+        });
+    </script>
+</body>
+
+</html>

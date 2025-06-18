@@ -6,7 +6,7 @@
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   id="Definition"
                   targetNamespace="http://example.com/payment-process">
-  <bpmn:process id="paymentProcess" name="Payment Process" isExecutable="true">
+  <bpmn:process id="paymentProcess" name="Payment Process" isExecutable="true" camunda:historyTimeToLive="P30D">
     <bpmn:startEvent id="start" name="Start" />
     <bpmn:sequenceFlow id="flow1" sourceRef="start" targetRef="handlePayment" />
     <bpmn:serviceTask id="handlePayment" name="Handle Payment" camunda:class="com.example.paymentservice.workflow.HandlePaymentDelegate" />

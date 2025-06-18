@@ -6,7 +6,7 @@
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   id="Definition"
                   targetNamespace="http://example.com/cart-maintenance">
-  <bpmn:process id="cartMaintenance" name="Cart Maintenance" isExecutable="true">
+  <bpmn:process id="cartMaintenance" name="Cart Maintenance" isExecutable="true" camunda:historyTimeToLive="P30D">
     <bpmn:startEvent id="statsStart" name="Generate Cart Stats">
       <bpmn:timerEventDefinition>
         <bpmn:timeCycle>PT30M</bpmn:timeCycle>

@@ -37,4 +37,19 @@ camunda:
     admin-user:
       id: demo
       password: demo
+      firstName: Demo
+      lastName: User
+      email: demo@example.com
     generate-unique-process-engine-name: true
+    database:
+      schema-update: true
+    auto-deployment-enabled: true
+    deployment-resource-pattern: classpath*:*.bpmn
+    webapp:
+      index-redirect-enabled: false
+    authorization:
+      enabled: false
+    generic-properties:
+      properties:
+        enable-password-policy: false
+        task-filter-create-default: 'All Tasks'

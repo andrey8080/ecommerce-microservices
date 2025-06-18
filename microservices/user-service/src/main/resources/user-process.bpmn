@@ -6,10 +6,10 @@
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   id="Definition"
                   targetNamespace="http://example.com/user-process">
-  <bpmn:process id="userRegistrationProcess" name="User Registration" isExecutable="true">
+  <bpmn:process id="userRegistrationProcess" name="User Registration" isExecutable="true" camunda:historyTimeToLive="P30D">
     <bpmn:startEvent id="start" name="Start" />
     <bpmn:sequenceFlow id="flow1" sourceRef="start" targetRef="fillForm" />
-    <bpmn:userTask id="fillForm" name="Enter Details" camunda:formKey="embedded:app:forms/user-registration.html" camunda:candidateGroups="admin" />
+    <bpmn:userTask id="fillForm" name="Enter Details" camunda:formKey="embedded:app:forms/user-registration.html" camunda:assignee="demo" camunda:candidateUsers="demo" camunda:candidateGroups="users" />
     <bpmn:sequenceFlow id="flow2" sourceRef="fillForm" targetRef="createUser" />
     <bpmn:serviceTask id="createUser" name="Create User" camunda:class="com.example.userservice.workflow.CreateUserDelegate" />
     <bpmn:sequenceFlow id="flow3" sourceRef="createUser" targetRef="end" />

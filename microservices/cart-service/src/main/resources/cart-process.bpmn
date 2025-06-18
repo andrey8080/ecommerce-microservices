@@ -6,7 +6,7 @@
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   id="Definition"
                   targetNamespace="http://example.com/cart-process">
-  <bpmn:process id="cartProcess" name="Cart Process" isExecutable="true">
+  <bpmn:process id="cartProcess" name="Cart Process" isExecutable="true" camunda:historyTimeToLive="P30D">
     <bpmn:startEvent id="start" name="Start" />
     <bpmn:sequenceFlow id="flow1" sourceRef="start" targetRef="clearCart" />
     <bpmn:serviceTask id="clearCart" name="Clear Cart" camunda:class="com.example.cartservice.workflow.ClearCartDelegate" />

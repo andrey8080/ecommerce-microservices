@@ -6,7 +6,7 @@
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   id="Definition"
                   targetNamespace="http://example.com/user-maintenance">
-  <bpmn:process id="userMaintenance" name="User Maintenance" isExecutable="true">
+  <bpmn:process id="userCleanup" name="User Cleanup" isExecutable="true" camunda:historyTimeToLive="P30D">
     <bpmn:startEvent id="cleanupStart" name="Cleanup Inactive Users">
       <bpmn:timerEventDefinition>
         <bpmn:timeCycle>0 0 2 * * ?</bpmn:timeCycle>
@@ -16,9 +16,12 @@
     <bpmn:serviceTask id="cleanupTask" name="Cleanup Users" camunda:class="com.example.userservice.workflow.CleanupInactiveUsersDelegate" />
     <bpmn:sequenceFlow id="flow2" sourceRef="cleanupTask" targetRef="cleanupEnd" />
     <bpmn:endEvent id="cleanupEnd" name="End" />
+  </bpmn:process>
+  
+  <bpmn:process id="userStats" name="User Statistics" isExecutable="true" camunda:historyTimeToLive="P30D">
     <bpmn:startEvent id="statsStart" name="Send User Stats">
       <bpmn:timerEventDefinition>
-        <bpmn:timeCycle>PT1H</bpmn:timeCycle>
+        <bpmn:timeCycle>R/PT1H</bpmn:timeCycle>
       </bpmn:timerEventDefinition>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="flow3" sourceRef="statsStart" targetRef="statsTask" />
@@ -26,7 +29,10 @@
     <bpmn:sequenceFlow id="flow4" sourceRef="statsTask" targetRef="statsEnd" />
     <bpmn:endEvent id="statsEnd" name="End" />
   </bpmn:process>
-  <bpmndi:BPMNDiagram id="BPMNDiagram_user_maintenance">
-    <bpmndi:BPMNPlane id="BPMNPlane_user_maintenance" bpmnElement="userMaintenance" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_user_cleanup">
+    <bpmndi:BPMNPlane id="BPMNPlane_user_cleanup" bpmnElement="userCleanup" />
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_user_stats">
+    <bpmndi:BPMNPlane id="BPMNPlane_user_stats" bpmnElement="userStats" />
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

@@ -6,7 +6,7 @@
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   id="Definition"
                   targetNamespace="http://example.com/product-maintenance">
-  <bpmn:process id="productMaintenance" name="Product Maintenance" isExecutable="true">
+  <bpmn:process id="productStockCheck" name="Product Stock Check" isExecutable="true" camunda:historyTimeToLive="P30D">
     <bpmn:startEvent id="stockStart" name="Check Low Stock">
       <bpmn:timerEventDefinition>
         <bpmn:timeCycle>0 0 9 * * ?</bpmn:timeCycle>
@@ -16,6 +16,9 @@
     <bpmn:serviceTask id="stockTask" name="Check Stock" camunda:class="com.example.productservice.workflow.CheckLowStockDelegate" />
     <bpmn:sequenceFlow id="flow2" sourceRef="stockTask" targetRef="stockEnd" />
     <bpmn:endEvent id="stockEnd" name="End" />
+  </bpmn:process>
+  
+  <bpmn:process id="productPriceUpdate" name="Product Price Update" isExecutable="true" camunda:historyTimeToLive="P30D">
     <bpmn:startEvent id="priceStart" name="Update Prices">
       <bpmn:timerEventDefinition>
         <bpmn:timeCycle>PT6H</bpmn:timeCycle>
@@ -26,7 +29,10 @@
     <bpmn:sequenceFlow id="flow4" sourceRef="priceTask" targetRef="priceEnd" />
     <bpmn:endEvent id="priceEnd" name="End" />
   </bpmn:process>
-  <bpmndi:BPMNDiagram id="BPMNDiagram_product_maintenance">
-    <bpmndi:BPMNPlane id="BPMNPlane_product_maintenance" bpmnElement="productMaintenance" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_product_stock">
+    <bpmndi:BPMNPlane id="BPMNPlane_product_stock" bpmnElement="productStockCheck" />
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_product_price">
+    <bpmndi:BPMNPlane id="BPMNPlane_product_price" bpmnElement="productPriceUpdate" />
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

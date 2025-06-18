@@ -6,7 +6,7 @@
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   id="Definition"
                   targetNamespace="http://example.com/product-process">
-  <bpmn:process id="productProcess" name="Product Process" isExecutable="true">
+  <bpmn:process id="productProcess" name="Product Process" isExecutable="true" camunda:historyTimeToLive="P30D">
     <bpmn:startEvent id="start" name="Start" />
     <bpmn:endEvent id="end" name="End" />
   </bpmn:process>

@@ -25,6 +25,9 @@ dependencies {
     implementation(platform("org.springframework.cloud:spring-cloud-dependencies:2023.0.3"))
 
     implementation("org.springframework.boot:spring-boot-starter-data-cassandra")
+    
+    // JDBC for Camunda DataSource
+    implementation("org.springframework.boot:spring-boot-starter-jdbc")
 
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-amqp")
@@ -36,6 +39,7 @@ dependencies {
 
     // Camunda BPM engine for embedded workflow execution
     implementation("org.camunda.bpm.springboot:camunda-bpm-spring-boot-starter:7.21.0")
+    implementation("org.camunda.bpm.springboot:camunda-bpm-spring-boot-starter-webapp:7.21.0")
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -43,6 +47,8 @@ dependencies {
     implementation("jakarta.transaction:jakarta.transaction-api")
     implementation("com.atomikos:transactions-spring-boot3-starter:6.0.0")
 
+    // H2 для Camunda
+    runtimeOnly("com.h2database:h2")
     runtimeOnly("org.postgresql:postgresql")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }

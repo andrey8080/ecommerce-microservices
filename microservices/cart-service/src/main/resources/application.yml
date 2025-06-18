@@ -14,9 +14,14 @@ spring:
         password: ${SPRING_RABBITMQ_PASSWORD:password}
     autoconfigure:
         exclude:
-            - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
             - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
-
+            - org.springframework.boot.autoconfigure.jdbc.XADataSourceAutoConfiguration
+    datasource:
+        # H2 в памяти для Camunda
+        url: jdbc:h2:mem:camunda;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+        driver-class-name: org.h2.Driver
+        username: sa
+        password: ""
 
 server:
     port: 8080
@@ -27,3 +32,7 @@ camunda:
       id: demo
       password: demo
     generate-unique-process-engine-name: true
+    database:
+      schema-update: true
+    auto-deployment-enabled: true
+    deployment-resource-pattern: classpath*:*.bpmn

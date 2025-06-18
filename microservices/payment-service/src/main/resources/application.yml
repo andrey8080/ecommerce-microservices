@@ -56,3 +56,7 @@ camunda:
       id: demo
       password: demo
     generate-unique-process-engine-name: true
+    database:
+      schema-update: true
+    auto-deployment-enabled: true
+    deployment-resource-pattern: classpath*:*.bpmn
