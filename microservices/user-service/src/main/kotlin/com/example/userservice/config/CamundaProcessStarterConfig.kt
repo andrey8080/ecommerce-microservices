@@ -38,8 +38,16 @@ class CamundaProcessStarterConfig {
                     
                     tasks.forEach { task ->
                         println("  Создана задача: ${task.name} (ID: ${task.id})")
-                        println("    Кандидаты-пользователи: ${task.candidateUsers}")
-                        println("    Кандидаты-группы: ${task.candidateGroups}")
+                        val candidateUsers = processEngine.taskService
+                            .getIdentityLinksForTask(task.id)
+                            .filter { it.type == "candidate" && it.userId != null }
+                            .map { it.userId }
+                        val candidateGroups = processEngine.taskService
+                            .getIdentityLinksForTask(task.id)
+                            .filter { it.type == "candidate" && it.groupId != null }
+                            .map { it.groupId }
+                        println("    Кандидаты-пользователи: $candidateUsers")
+                        println("    Кандидаты-группы: $candidateGroups")
                     }
                 }
             }

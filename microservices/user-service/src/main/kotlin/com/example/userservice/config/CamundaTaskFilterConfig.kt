@@ -24,7 +24,7 @@ class CamundaTaskFilterConfig {
                 // Создаем фильтр для всех задач
                 val allTasksFilter: Filter = filterService.newTaskFilter("All Tasks")
                 allTasksFilter.owner = "demo"
-                allTasksFilter.query = processEngine.taskService.createTaskQuery()
+                allTasksFilter.setQuery(processEngine.taskService.createTaskQuery())
                 
                 // Устанавливаем свойства фильтра
                 val properties = mutableMapOf<String, Any>()
@@ -47,8 +47,10 @@ class CamundaTaskFilterConfig {
             if (demoTasksFilter == null) {
                 val myTasksFilter: Filter = filterService.newTaskFilter("My Tasks")
                 myTasksFilter.owner = "demo"
-                myTasksFilter.query = processEngine.taskService.createTaskQuery()
-                    .taskCandidateUser("demo")
+                myTasksFilter.setQuery(
+                    processEngine.taskService.createTaskQuery()
+                        .taskCandidateUser("demo")
+                )
                 
                 val myTasksProperties = mutableMapOf<String, Any>()
                 myTasksProperties["color"] = "#2d4d3e"

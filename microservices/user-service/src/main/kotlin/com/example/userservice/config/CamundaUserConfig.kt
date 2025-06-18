@@ -54,18 +54,18 @@ class CamundaUserConfig {
         }
         
         // Добавляем пользователя demo в обе группы
-        val adminMembership = identityService.createMembershipQuery()
-            .userId("demo")
+        val adminMembership = identityService.createGroupQuery()
             .groupId("camunda-admin")
+            .groupMember("demo")
             .singleResult()
         if (adminMembership == null) {
             identityService.createMembership("demo", "camunda-admin")
             println("Пользователь demo добавлен в группу camunda-admin")
         }
         
-        val usersMembership = identityService.createMembershipQuery()
-            .userId("demo")
+        val usersMembership = identityService.createGroupQuery()
             .groupId("users")
+            .groupMember("demo")
             .singleResult()
         if (usersMembership == null) {
             identityService.createMembership("demo", "users")

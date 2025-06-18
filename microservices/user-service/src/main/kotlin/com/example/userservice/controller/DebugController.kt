@@ -15,7 +15,7 @@ class DebugController {
     lateinit var processEngine: ProcessEngine
 
     @GetMapping("/tasks")
-    fun getAllTasks(): Map<String, Any> {
+    fun getAllTasks(): Map<String, Any?> {
         val allTasks = processEngine.taskService.createTaskQuery().list()
         val demoTasks = processEngine.taskService.createTaskQuery()
             .taskCandidateUser("demo")
@@ -38,7 +38,7 @@ class DebugController {
     }
 
     @GetMapping("/processes")
-    fun getAllProcesses(): Map<String, Any> {
+    fun getAllProcesses(): Map<String, Any?> {
         val processInstances = processEngine.runtimeService.createProcessInstanceQuery().list()
         
         return mapOf(
@@ -54,7 +54,7 @@ class DebugController {
     }
 
     @PostMapping("/start-process")
-    fun startUserRegistrationProcess(): Map<String, Any> {
+    fun startUserRegistrationProcess(): Map<String, Any?> {
         return try {
             val processInstance = processEngine.runtimeService
                 .startProcessInstanceByKey("userRegistrationProcess")
