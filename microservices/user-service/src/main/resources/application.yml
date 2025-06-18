@@ -40,13 +40,14 @@ camunda:
       firstName: Demo
       lastName: User
       email: demo@example.com
-    generate-unique-process-engine-name: true
+    generate-unique-process-engine-name: false
     database:
       schema-update: true
     auto-deployment-enabled: true
     deployment-resource-pattern: classpath*:*.bpmn
     webapp:
       index-redirect-enabled: false
+      application-path: /
     authorization:
       enabled: false
     generic-properties:

@@ -190,3 +190,28 @@ curl http://localhost:8081/actuator/health
 - ✅ JCA-подобную интеграцию
 - ✅ Event-driven архитектуру
 - ✅ Контейнеризацию и оркестрацию
+
+### Troubleshooting Camunda Tasklist
+
+Если задачи не отображаются в интерфейсе Camunda, убедитесь, что в `application.yml`
+выключена генерация уникального имени процессного движка:
+
+```yaml
+camunda:
+  bpm:
+    generate-unique-process-engine-name: false
+```
+
+После изменения перезапустите соответствующий сервис.
+
+Если вместо формы появляется сообщение `Form failure: The context path is either empty or not defined`,
+укажите путь веб-приложения:
+
+```yaml
+camunda:
+  bpm:
+    webapp:
+      application-path: /
+```
+
+После этого вновь перезапустите сервис.

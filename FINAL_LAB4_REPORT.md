@@ -152,7 +152,9 @@ camunda:
     admin-user:
       id: demo
       password: demo
-    generate-unique-process-engine-name: true
+    generate-unique-process-engine-name: false
+    webapp:
+      application-path: /
     database:
       schema-update: true
 ```

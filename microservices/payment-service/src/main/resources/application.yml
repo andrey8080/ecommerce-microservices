@@ -55,7 +55,7 @@ camunda:
     admin-user:
       id: demo
       password: demo
-    generate-unique-process-engine-name: true
+    generate-unique-process-engine-name: false
     database:
       schema-update: true
     auto-deployment-enabled: true
